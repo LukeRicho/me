@@ -33,10 +33,19 @@ def get_some_details():
          dictionary, you'll need integer indeces for lists, and named keys for
          dictionaries.
     """
+    # open and read json files
     json_data = open(LOCAL + "/lazyduck.json").read()
 
+    # convert from json string to a dictionary
     data = json.loads(json_data)
-    return {"lastName": None, "password": None, "postcodePlusID": None}
+
+    # get last name
+    last_name = data["results"][0]["name"]["last"]
+    password = data["results"][0]["login"]["password"]
+    id = data["results"][0]["id"]["value"]
+    postcode = data["results"][0]["location"]["postcode"]
+    id_plus_postcode = int(id) + int(postcode)
+    return {"lastName": last_name, "password": password, "postcodePlusID": id_plus_postcode}
 
 
 def wordy_pyramid():
@@ -74,33 +83,83 @@ def wordy_pyramid():
     ]
     TIP: to add an argument to a URL, use: ?argName=argVal e.g. &minLength=
     """
-    pass
+    
+    pyraList = []
+    number = 3
+    limit = 18
+    url = "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?wordlength={}".format(number)
+    
+    while True:
+        if number <= limit:
+            url = "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?wordlength={}".format(number)
+            r = requests.get(url)
+            response_json = r.text
+            
+            while r.status_code != 200:
+                r = requests.get(url)
+                response_json = r.text
+            pyraList.append(response_json)
+            number = number + 2
+            
+            print(pyraList)
+        elif number >= limit:
+            break
+            
+    number = 20
+    while True:
+        if 3 < number:
+            url = "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?wordlength={}".format(number)
+            r = requests.get(url)
+            response_json = r.text
+            
+            while r.status_code != 200:
+                r = requests.get(url)
+                response_json = r.text
+            pyraList.append(response_json)
+            number = number - 2
+            
+            print(pyraList)
+        elif number <= 3:
+            break
+
+    return pyraList
 
 
-def wunderground():
-    """Find the weather station for Sydney.
+def pokedex(low=1, high=5):
+    """ Return the name, height and weight of the tallest pokemon in the range low to high.
 
-    Get some json from a request parse it and extract values.
-    Sign up to https://www.wunderground.com/weather/api/ and get an API key
+    Low and high are the range of pokemon ids to search between.
+    Using the Pokemon API: https://pokeapi.co get some JSON using the request library
+    (a working example is filled in below).
+    Parse the json and extract the values needed.
+    
     TIP: reading json can someimes be a bit confusing. Use a tool like
          http://www.jsoneditoronline.org/ to help you see what's going on.
     TIP: these long json accessors base["thing"]["otherThing"] and so on, can
          get very long. If you are accessing a thing often, assign it to a
          variable and then future access will be easier.
     """
-    base = "http://api.wunderground.com/api/"
-    api_key = "YOUR KEY - REGISTER TO GET ONE"
-    country = "AU"
-    city = "Sydney"
-    template = "{base}/{key}/conditions/q/{country}/{city}.json"
-    url = template.format(base=base, key=api_key, country=country, city=city)
-    r = requests.get(url)
-    if r.status_code is 200:
-        the_json = json.loads(r.text)
-        obs = the_json["current_observation"]
 
-    return {"state": None, "latitude": None, "longitude": None, "local_tz_offset": None}
+    template = "https://pokeapi.co/api/v2/pokemon/{id}"
 
+    tallest = 0
+
+    for x in range(low,high):
+        url = template.format(base=template, id=x)
+        r = requests.get(url)
+
+        if r.status_code is 200:
+            the_json = json.loads(r.text)
+            tallest_in_range = the_json["height"]
+            if tallest_in_range > tallest:
+                tallest = tallest_in_range
+                name = the_json["name"]  
+                weight = the_json["weight"]
+                height = the_json["height"] 
+    return {"name": name, "weight": weight, "height": height}
+      
+      
+        
 
 def diarist():
     """Read gcode and find facts about it.
@@ -114,8 +173,19 @@ def diarist():
          might be why. Try in rather than == and that might help.
     TIP: remember to commit 'lasers.pew' and push it to your repo, otherwise
          the test will have nothing to look at.
+    TIP: this might come in handy if you need to hack a 3d print file in the future.
     """
-    pass
+    #Opens and reads file
+    data = open(LOCAL + "/Trispokedovetiles(laser).gcode").read()
+    #counts number
+    counted = a.count("M10 P1")
+    print(counted)
+    #open storage file lasers.pew
+    storage = open("week4/lasers.pew", "w+")
+    #Write the number to the new file "lasers.pew"
+    storage.write(str(c))
+    #Close the new file created
+    storage.close()
 
 
 if __name__ == "__main__":

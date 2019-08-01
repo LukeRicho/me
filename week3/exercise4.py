@@ -25,8 +25,34 @@ def binary_search(low, high, actual_number):
     """
     tries = 0
     guess = 0
-    return {"guess": guess, "tries": tries}
 
+    n = list(range(low, high + 1))
+    min = 0
+    max = len(n)
+
+    #Find the midpoint
+    while max >= min:
+        #finds the average of the min and the difference between max and min.
+        MidPoint = math.floor(min + (max - min)/2)
+    #check midpoint is the answer
+        if n[MidPoint] is actual_number:
+            return {"guess": guess, "tries": tries}
+        #Higher or lower than midpoint
+        elif n[MidPoint] > actual_number:
+            #add try
+            tries +=1
+            guess = n[MidPoint]
+            #new maximum
+            max = MidPoint - 1
+    
+        else:
+            #add try
+            tries += 1
+            guess = n[MidPoint]
+            #new minimum is the midpoint + 1
+            min = MidPoint + 1
+    return {"guess": guess, "tries": tries}
+    
 
 if __name__ == "__main__":
     print(binary_search(1, 100, 5))
@@ -34,3 +60,6 @@ if __name__ == "__main__":
     print(binary_search(1, 100, 95))
     print(binary_search(1, 51, 5))
     print(binary_search(1, 50, 5))
+
+
+
