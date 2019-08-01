@@ -19,7 +19,18 @@ you'll need to figure out for yourself what to do.
 # return a list of countdown messages, much like in the bad function above.
 # It should say something different in the last message.
 def countdown(message, start, stop, completion_message):
-    pass
+    start = 7
+    stop = 0
+    message = "Commencing in {}"
+    last_message = "We have lift off"
+    
+    while True:
+        print("{m} {n}".format(m=message, n=start))
+        start = (start - 1)
+        if start == stop:
+            break
+        print(last_message)
+        return last_message
 
 
 # TRIANGLES
@@ -123,7 +134,7 @@ def tell_me_about_this_right_triangle(facts_dictionary):
     elif "base" < "height":
         Aspect = tall
     elif "base" == "height":
-        Aspect = wide
+        Aspect = equal
 
     return Aspect + facts
 
@@ -146,26 +157,23 @@ def wordy_pyramid(api_key):
     import requests
 
     baseURL = (
-        "http://api.wordnik.com/v4/words.json/randomWords?"
-        "api_key={api_key}"
-        "&minLength={length}"
-        "&maxLength={length}"
-        "&limit=1"
+        "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?"
+        "wordlength={length}"
     )
     pyramid_list = []
     for i in range(3, 21, 2):
-        url = baseURL.format(api_key="", length=i)
+        url = baseURL.format(length=i)
         r = requests.get(url)
         if r.status_code is 200:
-            message = r.json()[0]["word"]
+            message = r.text
             pyramid_list.append(message)
         else:
             print("failed a request", r.status_code, i)
     for i in range(20, 3, -2):
-        url = baseURL.format(api_key="", length=i)
+        url = baseURL.format(length=i)
         r = requests.get(url)
         if r.status_code is 200:
-            message = r.json()[0]["word"]
+            message = r.text
             pyramid_list.append(message)
         else:
             print("failed a request", r.status_code, i)
@@ -173,13 +181,48 @@ def wordy_pyramid(api_key):
 
 
 def get_a_word_of_length_n(length):
-    pass
+    
+    import requests
+
+    baseURL = (
+        "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?"
+        "wordlength={length}"
+    )
+    l = length
+    limit = 0
+    list1 = []
+    for length in range(limit):
+        url = baseURL.format(length = l)
+        r = requests.get(url)
+        if r.status_code is 200:
+            text = r.text
+            list1.append(text)
+            if type(text) == str:
+                return ("\n".join(list1))
+            else:
+                return None
 
 
 def list_of_words_with_lengths(list_of_lengths):
-    pass
+    
+    import requests
+
+    baseURL = (
+        "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?"
+        "wordlength={length}"
+    )
+    word_list = []
+    for x in range(3, 21, 2):
+        url = baseURL.format(length=list_of_lengths)
+        r = requests.get(url)
+        if r.status_code is 200:
+            text = r.text
+            word_list.append(text)
+        else:
+            print("failed a request", r.status_code, x)
+    return word_list
 
 
-if __name__ == "__main__":
-    do_bunch_of_bad_things()
-    wordy_pyramid("a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5")
+#if __name__ == "__main__":
+    #do_bunch_of_bad_things()
+    #wordy_pyramid("a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5")

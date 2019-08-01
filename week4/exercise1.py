@@ -84,7 +84,7 @@ def wordy_pyramid():
     TIP: to add an argument to a URL, use: ?argName=argVal e.g. &minLength=
     """
     
-    pyraList = []
+    word_list = []
     number = 3
     limit = 18
     url = "https://us-central1-waldenpondpress.cloudfunctions.net/give_me_a_word?wordlength={}".format(number)
@@ -98,10 +98,10 @@ def wordy_pyramid():
             while r.status_code != 200:
                 r = requests.get(url)
                 response_json = r.text
-            pyraList.append(response_json)
+            word_list.append(response_json)
             number = number + 2
             
-            print(pyraList)
+            print(word_list)
         elif number >= limit:
             break
             
@@ -115,14 +115,14 @@ def wordy_pyramid():
             while r.status_code != 200:
                 r = requests.get(url)
                 response_json = r.text
-            pyraList.append(response_json)
+            word_list.append(response_json)
             number = number - 2
             
-            print(pyraList)
+            print(word_list)
         elif number <= 3:
             break
 
-    return pyraList
+    return word_list
 
 
 def pokedex(low=1, high=5):
@@ -178,12 +178,12 @@ def diarist():
     #Opens and reads file
     data = open(LOCAL + "/Trispokedovetiles(laser).gcode").read()
     #counts number
-    counted = a.count("M10 P1")
+    counted = data.count("M10 P1")
     print(counted)
     #open storage file lasers.pew
     storage = open("week4/lasers.pew", "w+")
     #Write the number to the new file "lasers.pew"
-    storage.write(str(c))
+    storage.write(str(counted))
     #Close the new file created
     storage.close()
 

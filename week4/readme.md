@@ -14,3 +14,13 @@ status code 200 returns what you asked for
 word_pyramid = []
     template = "http://api.wordnik.com/v4/words.json/randomWords?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5&minLength=10&maxLength=10&limit=1"
     range(2, 20, 2)
+
+
+    open().read()       opens and reads the file
+
+    json.loads(json_data)       convert the json_data from string to a dictionary
+    int     integer
+
+    r = requests.get(url) references the url and instructs to get data from there
+
+    while r.status_code != 200: confirms url is working and no error happens
