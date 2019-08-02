@@ -47,7 +47,15 @@ def fizz_buzz():
     # while True:
     #     count = count + 1
     #     if (count % 3 == 0) and (i % 5 == 0):
-    #     fizzBuzzList.append(FizzBuzz)
+    #         fizzBuzzList.append("FizzBuzz")
+    #     elif (count % 5 == 0):
+    #         fizzBuzzList.append("Buzz")
+    #     elif (count % 3 == 0):
+    #         fizzBuzzList.append("Fizz")
+    #     else:
+    #         fizzBuzzList.append(int(count))
+    #     if count == 100:
+        
     
     # for x in range(101):
     #     fizzBuzzList.append(x)
@@ -63,7 +71,7 @@ def fizz_buzz():
 
     
 
-    return fizzBuzzList
+    # return fizzBuzzList
 
 
 def put_behind_bars(input_string="very naughty boy"):
