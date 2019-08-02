@@ -42,23 +42,26 @@ def fizz_buzz():
     Return a list that has an integer if the number isn't special, and a string
     if it is. E.g. [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, ...]
     """
-    fizzBuzzList = []
-    for x in range(101):
-        fizzBuzzList.append(x)
+    # fizzBuzzList = []
+    # count = 0
+    # while True:
+    #     count = count + 1
+    #     if (count % 3 == 0) and (i % 5 == 0):
+    #     fizzBuzzList.append(FizzBuzz)
+    
+    # for x in range(101):
+    #     fizzBuzzList.append(x)
 
-    i = 0
-    for i in fizzBuzzList: 
-        if (i % 3 == 0) and (i % 5 == 0):
-            i = "FizzBuzz"
-        elif (i % 5 == 0):
-            i = "Buzz"
-        elif (i % 3 == 0):
-            i = "Fizz"
+    # for i in fizzBuzzList: 
+    #     if (i % 3 == 0) and (i % 5 == 0):
+    #         i = "FizzBuzz"
+    #     elif (i % 5 == 0):
+    #         i = "Buzz"
+    #     elif (i % 3 == 0):
+    #         i = "Fizz"
 
 
     
-    
-
 
     return fizzBuzzList
 
@@ -75,9 +78,9 @@ def put_behind_bars(input_string="very naughty boy"):
     """
     
     wordlist = list(input_string)
-    P = "|".join(wordlist)
-    B = "|" + P + "|"
-    return B
+    inside_bars = "|".join(wordlist)
+    outside_bars = "|" + inside_bars + "|"
+    return outside_bars
     
 
 
@@ -95,6 +98,8 @@ def pet_filter(letter="a"):
             "hedgehog","guppy",]
     # fmt: on
     
+    return [i for i in pets if letter in i]
+   
     
 
 
@@ -107,6 +112,8 @@ def best_letter_for_pets():
     import string
 
     the_alphabet = string.ascii_lowercase
+
+
 
     return ""
 
@@ -171,7 +178,7 @@ def fast_filler(number_of_words=200):
     If you get this one to work, you are a Very Good Programmer™!
     """
 
-    return paragraph
+    #return paragraph
 
 
 if __name__ == "__main__":
